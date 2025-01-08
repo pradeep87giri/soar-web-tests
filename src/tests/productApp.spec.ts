@@ -11,6 +11,11 @@ test.describe('Product App page verification', async () => {
     test('Verify items on pagination', async ({ productPage }) => {
         const maxNumOfItems = await productPage.changePaginationToMax()
         const actualItems = await productPage.getNumberofItemsOnPage()
-        expect(actualItems).toBeLessThanOrEqual(parseInt(maxNumOfItems ?? '0'))
+        expect(actualItems, 'Verification of number of Items').toBeLessThanOrEqual(parseInt(maxNumOfItems ?? '0'))
+    })
+
+    test.only('Open and Verify item dialog', async ({ productPage }) => {
+        await productPage.clickAndVerifyItem('Apple Juice', 'apple_juice.jpg')
+        await productPage.expandReview()
     })
 })
