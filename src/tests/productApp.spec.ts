@@ -1,13 +1,14 @@
 // import { test, expect } from "@playwright/test";
 import test, { expect } from "../fixtures/baseFixture"
-import { userData } from "../testData/data"
+import { newUserData, userAddressDetails, userCardDetails } from "../testData/data"
 
 
-test.describe('Product App page verification', async () => {
+test.describe.serial('Product App page verification', async () => {
     test.beforeEach('Navigate to the page', async ({ page, productPage }) => {
         await page.goto('/#/')
         await productPage.handlePopUpAndCookies()
     })
+
 
     test('Verify items on pagination', async ({ productPage }) => {
         const maxNumOfItems = await productPage.changePaginationToMax()
@@ -22,11 +23,29 @@ test.describe('Product App page verification', async () => {
     })
 
 
-    test('Verify New User Registration and Login', async ({ page, loginPage }) => {
+    test('Verify New User Registration and Login', async ({ page, loginPage, productPage }) => {
         await page.goto('/#/register')
         await loginPage.validateLoginErrorMsgs()
-        await loginPage.newUserRegistration(userData)
+        await loginPage.newUserRegistration(newUserData)
         await loginPage.verifyUserRegistration()
-        await loginPage.userLogin(userData.email, userData.password)
+        await loginPage.userLogin(newUserData.email, newUserData.password)
+    })
+
+
+    test('Verify Purchase Order', async ({ page, loginPage, productPage }) => {
+        await test.step('Add Items to Basket', async () => {
+            await page.goto('/#/login')
+            await loginPage.userLogin(newUserData.email, newUserData.password)
+            await productPage.addItemsToBasket(5)
+            await productPage.verifyBasketItems()
+        })
+
+        await test.step('Complete Purchase Order And Verify', async () => {
+            await productPage.addNewAddress(userAddressDetails)
+            await productPage.chooseDeliveryOption()
+            await productPage.addNewCard(userCardDetails)
+            await productPage.choosePaymentOption()
+            await productPage.completePurchase()
+        })
     })
 })

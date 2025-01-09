@@ -40,7 +40,9 @@ export class LoginPage {
         await this.lblUserRegistration.click()
         expect(await this.lblErrRepeatPwd.textContent(), 'Verification of Repeat Password Field blank error').toContain('Please repeat your password.')
         await this.cmbSecurityQstn.click()
+        await this.txtSecurityAnswer.press('Escape')
         await this.lblUserRegistration.click()
+        await this.txtSecurityAnswer.press('Escape')
         expect(await this.lblErrSecurityQstn.textContent(), 'Verification of Security Question Field blank error').toContain('Please select a security question.')
         await this.txtSecurityAnswer.click()
         await this.lblUserRegistration.click()
@@ -70,12 +72,12 @@ export class LoginPage {
         console.log('New User Registered Successfully')
     }
 
-    
+
     async userLogin(email, password) {
         await this.txtEmailLogin.fill(email)
         await this.txtPwdLogin.fill(password)
         await this.btnLogin.click()
         expect(await this.page.title(), 'Verification of User Login').toContain('OWASP Juice Shop')
-        console.log('User Logged in Successfully')
+        console.log(`User ${email} Logged in Successfully`)
     }
 } 
