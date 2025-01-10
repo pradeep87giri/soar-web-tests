@@ -1,4 +1,3 @@
-import { zip } from "lodash"
 
 export const newUserData = {
     email: `user${Math.floor(Math.random() * 10000)}@example.com`,
