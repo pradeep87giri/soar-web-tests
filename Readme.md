@@ -26,12 +26,17 @@ Run the install command and select the following to get started:
 - Install Playwright browsers (default is true)
 - or alternatively can install browser with command `npx playwright install --with-deps chromium`
 
-## Running the tests
+## Running the tests in headless mode
 
  ```
  npx playwright test
  ```
 
+## Running the tests in headed mode
+
+ ```
+ npx playwright test --headed
+ ```
 ## Running the tests with debugging
 
  ```
