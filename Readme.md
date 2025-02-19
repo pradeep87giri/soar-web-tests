@@ -1,4 +1,4 @@
-# Soar - Web Functional Tests
+# Playwright - Web Functional Tests
 
 This project is to e2e test the Product Purchase web application
 
